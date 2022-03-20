@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1" http-equiv="refresh" content="0 url=http://MeteorOnlineIngame.fr/" />
+<style>
+
+
+
+.button-1 {
+  font-family: "Open Sans", sans-serif;
+  font-size: 16px;
+  letter-spacing: 2px;
+  text-decoration: none;
+  text-transform: uppercase;
+  color: #000;
+  background-color: greenyellow;
+  cursor: pointer;
+  border: 3px solid;
+  padding: 0.25em 0.5em;
+  box-shadow: 1px 1px 0px 0px, 2px 2px 0px 0px, 3px 3px 0px 0px, 4px 4px 0px 0px, 5px 5px 0px 0px;
+  position: relative;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  position: absolute;
+  top: 0px;
+  left: 20px;
+}
+
+.button-1:active {
+  box-shadow: 0px 0px 0px 0px;
+  background-color: white;
+  top: 5px;
+  left: 25px;
+}
+
+@media (min-width: 768px) {
+  .button-1 {
+    padding: 0.25em 0.75em;
+  }
+}
+.button-2 {
+  font-family: "Open Sans", sans-serif;
+  font-size: 16px;
+  letter-spacing: 2px;
+  text-decoration: none;
+  text-transform: uppercase;
+  color: #000;
+  background-color: greenyellow;
+  cursor: pointer;
+  border: 3px solid;
+  padding: 0.25em 0.5em;
+  box-shadow: 1px 1px 0px 0px, 2px 2px 0px 0px, 3px 3px 0px 0px, 4px 4px 0px 0px, 5px 5px 0px 0px;
+  position: relative;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  position: absolute;
+  top: 0px;
+  left: 120px;
+}
+
+.button-2:active {
+  box-shadow: 0px 0px 0px 0px;
+  top: 5px;
+  background-color: white;
+  left: 125px;
+  
+}
+@media (min-width: 768px) {
+  .button-2 {
+    padding: 0.25em 0.75em;
+  }
+}
+
+
+
+
+.button-4 {
+  font-family: "Open Sans", sans-serif;
+  font-size: 16px;
+  letter-spacing: 2px;
+  text-decoration: none;
+  text-transform: uppercase;
+  color: #000;
+  background-color: greenyellow;
+  cursor: pointer;
+  border: 3px solid;
+  padding: 0.25em 0.5em;
+  box-shadow: 1px 1px 0px 0px, 2px 2px 0px 0px, 3px 3px 0px 0px, 4px 4px 0px 0px, 5px 5px 0px 0px;
+  position: relative;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  position: absolute;
+  top: 400px;
+  left: 580px;
+}
+
+.button-4:active {
+  box-shadow: 0px 0px 0px 0px;
+  top: 405px;
+  background-color: white;
+  left: 585px;
+
+
+
+
+
+
+
+
+  
+}
+@media (min-width: 768px) {
+  .button-4 {
+    padding: 0.25em 0.75em;
+  }
+}
+
+
+
+
+
+.title {
+    position: absolute;
+    color: greenyellow;
+    left: 550px;
+    top: 60px;
+    
+}
+
+.text {
+    position: absolute;
+    color: greenyellow;
+    left: 555px;
+    top: 290px;
+}
+
+.text2 {
+    position: absolute;
+    color: greenyellow;
+    left: 20px;
+    top: 450px;
+}
+.pseudo {
+    position: absolute;
+    color: black;
+    background-color: greenyellow;
+    width: 200px;
+    height: 25px;
+    left: 525px;
+    top: 350px;
+}
+
+
+
+
+</style>
+
+</head>
+<body onLoad ="load()" onKeyDown = "move(event)" style="background-color: rgb(0, 0, 0)">
+<script>
+  var rotation = 50;
+  function load() {
+    player = document.getElementById("sprite");
+    player.style.left = 50 + "px";
+    player.style.top = 220 + "px";
+    document.querySelector("#sprite").style.transform = `rotate(${rotation}deg)`;
+
+  }
+</script>
+<div>
+  <img src ="player.png" alt="player" id="sprite" width="400px" style="position: absolute; left: 0px; top: 0px;" />
+</div>
+<button class="button-1" role="button">aides</button>
+<button class="button-2" role="button">credits</button>
+<button class="button-4" role="button" onclick="window.location.href='game.html'">jouer</button>
+<form action="profil.html" method="get">
+<input class="pseudo" ></input>
+<h1 class="title">METEOR</h1>
+<h2 class="text">YOUR NAME</h2>
+
+</body>
+</html> 

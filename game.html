@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1" http-equiv="refresh" content="0; url=http://MeteorOnlineIngame.fr/" />
+<style>
+#sprite {
+    position: absolute;
+}
+#shot {
+    position: absolute;
+}
+.square {
+  position:absolute;
+  top:0px;
+  left:340px;
+  height: 1000px;
+  width: 550px;
+  background-color: rgb(2, 1, 65);
+
+}
+
+
+.score {
+
+  color: rgb(9, 255, 0);
+  position: absolute;
+  top: 50;
+  left: 200;
+}
+.score2 {
+
+color: rgb(9, 255, 0);
+position: absolute;
+top: 50;
+left: 50;
+}
+
+div.reflection
+{
+    -webkit-transform: scaleY(-1);
+    -moz-transform: scaleY(-1);
+    -o-transform: scaleY(-1);
+    -ms-transform: scaleY(-1);
+    transform: scaleY(-1);
+}
+
+.button-4 {
+  font-family: "Open Sans", sans-serif;
+  font-size: 16px;
+  letter-spacing: 2px;
+  text-decoration: none;
+  text-transform: uppercase;
+  color: #000;
+  background-color: greenyellow;
+  cursor: pointer;
+  border: 3px solid;
+  padding: 0.25em 0.5em;
+  box-shadow: 1px 1px 0px 0px, 2px 2px 0px 0px, 3px 3px 0px 0px, 4px 4px 0px 0px, 5px 5px 0px 0px;
+  position: relative;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+}
+
+.button-4:active {
+  box-shadow: 0px 0px 0px 0px;
+  top: 5px;
+  background-color: white;
+  left: initial + 5px;
+  
+
+
+
+
+  
+}
+@media (min-width: 768px) {
+  .button-4 {
+    padding: 0.25em 0.75em;
+  }
+}
+
+.button-3 {
+  font-family: "Open Sans", sans-serif;
+  font-size: 16px;
+  letter-spacing: 2px;
+  text-decoration: none;
+  text-transform: uppercase;
+  color: #000;
+  background-color: greenyellow;
+  cursor: pointer;
+  border: 3px solid;
+  padding: 0.25em 0.5em;
+  box-shadow: 1px 1px 0px 0px, 2px 2px 0px 0px, 3px 3px 0px 0px, 4px 4px 0px 0px, 5px 5px 0px 0px;
+  position: relative;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  position: absolute;
+  top: 100px;
+  left: 100px;
+}
+
+.button-3:active {
+  box-shadow: 0px 0px 0px 0px;
+  top: 105px;
+  background-color: white;
+  left: 105px;
+  
+
+
+
+
+  
+}
+@media (min-width: 768px) {
+  .button-3 {
+    padding: 0.25em 0.75em;
+  }
+}
+
+
+</style>
+</head>
+<body onLoad ="position()" onkeyup="stop()" onKeyDown = "move(event)" style="background-color: rgb(0, 0, 0)">
+<script>
+var width = window.innerWidth;
+var height = window.innerHeight;
+
+var xm1 = (Math.random() * 500) + 300;
+var ym1 = 0;
+
+
+var xm2 = (Math.random() * 500) + 300;
+var ym2 = 0;
+
+var xPico = 128;
+var yPico = 590;
+
+var xm3 = (Math.random() * 500) + 300;
+var ym3 = 0;
+
+var rotation1 = 0;
+var rotation2 = 0;
+var rotation3 = 0;
+var erot = 0;
+
+var rdmRo1 = (Math.random() * 1) + -1;
+var rdmRo2 = (Math.random() * 1) + -1;
+var rdmRo3 = (Math.random() * 1) + -1;
+
+
+
+var mvel = 1;
+var mvel2 = 2;
+var mvel3 = 3;
+
+var dx = 3;
+var dy = 3;
+
+
+var xBul = 0;
+var yBul = 0;
+
+//enemy
+var exBul = 0;
+var eyBul = -500;
+var eAnim = 0;
+var shot = 0;
+var eshot = 0;
+var xen = 0;
+var yen = -500;
+var erdm = 0;
+var enemydir = 0;
+var epv = 7;
+var evel = 1;
+
+// player
+var acceleration = 0;
+var xPos = 500;
+var yPos = height-100;
+
+var hp = 7;
+
+var dir = 0;
+var score = 0;
+
+
+// audio
+var theme = new Audio('retro.mp3');
+var laser = new Audio('laser.wav');
+var elaser = new Audio('elaser.wav');
+var boom = new Audio('boom.wav');
+var alert = new Audio('red.mp3');
+
+var alert1 = 1;
+
+function position() {
+    theme.play()
+    width = window.innerWidth;
+    height = window.innerHeight;
+
+    // images
+    bg = document.getElementById("bg");
+    bg.style.left = 340 + "px";
+    bg.style.top = 0 + "px";
+    bg.src = "bg2.png"
+
+    player = document.getElementById("sprite");
+    player.style.left = xPos + "px";
+    player.style.top = yPos + "px";
+
+    bullet = document.getElementById("bullet");
+    bullet.style.left = xBul + "px";
+    bullet.style.top = yBul + "px";
+
+    ebullet = document.getElementById("ebullet");
+    ebullet.style.left = exBul + "px";
+    ebullet.style.top = eyBul + "px";
+
+    meteor1 = document.getElementById("meteor1");
+    meteor1.style.left = xm1 + "px";
+    meteor1.style.top = ym1 + "px";
+
+    meteor2 = document.getElementById("meteor2");
+    meteor2.style.left = xm2 + "px";
+    meteor2.style.top = ym2 + "px";
+
+    meteor3 = document.getElementById("meteor3");
+    meteor3.style.left = xm3 + "px";
+    meteor3.style.top = ym3 + "px";
+
+    var enemy = document.getElementById("enemy");
+    enemy.style.left = xen + "px";
+    enemy.style.top = yen + "px";
+
+    var eFlam = document.getElementById("eFlam");
+    eFlam.style.left = xen + 30 + "px";
+    eFlam.style.top = yen - 30 + "px";
+
+    var life = document.getElementById("life");
+    life.style.left = 120 + "px";
+    life.style.top = 25 + "px";
+
+    var ehp = document.getElementById("ehp");
+    ehp.style.left = 900 + "px";
+    ehp.style.top = 25 + "px";
+
+    var map = document.getElementById("map");
+    map.style.left = 120 + "px";
+    map.style.top = 200 + "px";
+    map.src = "map.png"
+
+    var pico = document.getElementById("Pico");
+    pico.style.left = xPico + "px";
+    pico.style.top = yPico + "px";
+    pico.src = "playericon.png"
+
+    var pico = document.getElementById("coin");
+    pico.style.left = 10 + "px";
+    pico.style.top = 40 + "px";
+    pico.src = "Mcoin.png"
+
+    rotation1 += rdmRo1
+    rotation2 += rdmRo2
+    rotation3 += rdmRo3
+
+
+    document.querySelector("#meteor1").style.transform = `rotate(${rotation1}deg)`;
+    document.querySelector("#meteor2").style.transform = `rotate(${rotation2}deg)`;
+    document.querySelector("#meteor3").style.transform = `rotate(${rotation3}deg)`;
+
+    document.getElementById('score').innerHTML = score;
+
+    ehp.src = "ehp7.png"
+
+    // points de vies
+    if (hp == 7) {
+      life.src = "hp7.png"
+    } else if (hp == 6) {
+      life.src = "hp6.png"
+    } else if (hp == 5) {
+      life.src = "hp5.png"
+    } else if (hp == 4) {
+      life.src = "hp4.png"
+    } else if (hp == 3) {
+      life.src = "hp3.png"
+    } else if (hp == 2) {
+      life.src = "hp2.png"
+    } else if (hp == 1) {
+      life.src = "hp1.png"
+    } else if (hp < 1) {
+      score -= 10;
+      hp = 7;
+      alert1 = 1;
+    }
+
+    // points de vies enemy
+    if (epv == 7) {
+      ehp.src = "ehp7.png"
+    } else if (epv == 6) {
+      ehp.src = "ehp6.png"
+    } else if (epv == 5) {
+      ehp.src = "ehp5.png"
+    } else if (epv == 4) {
+      ehp.src = "ehp4.png"
+    } else if (epv == 3) {
+      ehp.src = "ehp3.png"
+    } else if (epv == 2) {
+      ehp.src = "ehp2.png"
+    } else if (epv == 1) {
+      ehp.src = "ehp1.png"
+    } else if (epv < 1) {
+      ehp.src = "void.png"
+    }
+
+
+
+    // degats
+    if (exBul < xPos+50) {
+        if (exBul > xPos-50) {
+          if (eyBul > yPos-30) {
+            if (eyBul < yPos+30) {
+              boom.play()
+              eyBul = height+100;
+              hp -= 1;
+
+            }
+          }
+        }
+      }
+
+
+
+    if (xen < 340) {
+      xen = 340;
+      enemydir = 1;
+    }
+
+    if (xen > 810) {
+      xen = 810;
+      enemydir = 2;
+    }
+
+      // mouvements de l'enemy
+      if (score < 17) {
+        if (enemydir == 1) {
+          xen += evel;
+        } else if (enemydir == 2) {
+          xen -= evel;
+        }
+      }
+
+    // animation enemy
+    eAnim += 1;
+    if (eAnim == 0) {
+      enemy.src = "enemy4.png"
+      if (yen < 40) {
+        eFlam.src = "flame1.png"
+      } else {
+        eFlam.src = "void.png"
+      }
+    }
+    if (eAnim == 15) {
+      enemy.src = "enemy3.png"
+      if (yen < 40) {
+        eFlam.src = "flame2.png"
+      } else {
+        eFlam.src = "void.png"
+      }
+    }
+    if (eAnim == 30) {
+      enemy.src = "enemy2.png"
+      if (yen < 40) {
+        eFlam.src = "flame1.png"
+      } else {
+        eFlam.src = "void.png"
+      }
+    }
+    if (eAnim == 45) {
+      enemy.src = "enemy1.png"
+      if (yen < 40) {
+        eFlam.src = "flame3.png"
+      } else {
+        eFlam.src = "void.png"
+      }
+    }
+    if (eAnim > 45) {
+      eAnim = 0;
+    }
+    
+
+    //collision mur droite/gauche
+    if (xPos < 330) {
+      xPos = 330;
+    }
+    if (xPos > 800) {
+      xPos = 800;
+    }
+    if (yBul > -100) {
+      yBul -= 10;
+    }
+
+    // mouvements du joueur
+    if (dir == 1) {
+      xPos += 4;
+      rotate = 5;
+
+    }
+    if (dir == 2) {
+      xPos -= 4;
+      rotate = 355;
+
+    }
+
+
+
+
+
+
+    if (score < 10) {
+      ehp.src = "void.png"
+
+      if (yen > -500) {
+        yen -= 1;
+      }
+
+      //jeu avant score 10
+
+
+
+      if (ym1 < height-80) {
+        ym1 -= mvel;
+      } else {
+        mvel += (Math.random() * 5) + 2;
+      }
+      if (ym2 < height-80) {
+        ym2 -= mvel2;
+      } else {
+        mvel2 += (Math.random() * 5) + 2;
+      }
+      if (ym3 < height-80) {
+        ym3 -= mvel3;
+      } else {
+        mvel3 += (Math.random() * 5) + 2;
+      }
+
+
+      if (mvel > 0) {
+        mvel = (Math.random() * (-height*0.003)) + 1;
+      }
+      if (mvel2 > 0) {
+        mvel2 = (Math.random() * (-height*0.003)) + 1;
+      }
+      if (mvel3 > 0) {
+        mvel3 = (Math.random() * (-height*0.003)) + 1;
+      }
+
+      // shot meteorites
+      if (xBul < xm1+50) {
+        if (xBul > xm1-50) {
+          if (yBul > ym1-30) {
+            if (yBul < ym1+30) {
+              boom.play()
+              ym1 = -500;
+              xm1 = (Math.random() * 500) + 300;
+              score += 1;
+              yBul = -500;
+              rdmRo1 = (Math.random() * 1) + -1;
+            }
+          }
+        }
+      }
+
+      if (xBul < xm2+50) {
+        if (xBul > xm2-50) {
+          if (yBul > ym2-30) {
+            if (yBul < ym2+30) {
+              boom.play()
+              ym2 = -500;
+              xm2 = (Math.random() * 500) + 300;
+              score += 1;
+              yBul = -500;
+              rdmRo2 = (Math.random() * 1) + -1;
+            }
+          }
+        }
+      }
+
+      if (xBul < xm3+50) {
+        if (xBul > xm3-50) {
+          if (yBul > ym3-30) {
+            if (yBul < ym3+30) {
+              boom.play()
+              ym3 = -500;
+              xm3 = (Math.random() * 500) + 300;
+              score += 1;
+              yBul = -500;
+              rdmRo3 = (Math.random() * 1) + -1;
+            }
+          }
+        }
+      }
+
+      // tp meteorites
+      if (ym1 > height-80) {
+        ym1 = -500;
+        xm1 = (Math.random() * 500) + 300;
+      }
+      if (ym2 > height-80) {
+        ym2 = -500;
+        xm2 = (Math.random() * 500) + 300;
+      }
+      if (ym3 > height-80) {
+        ym3 = -500;
+        xm3 = (Math.random() * 500) + 300;
+      }
+
+    } else if (score < 17){
+
+
+
+
+      bg.src = "bg2.png"
+      if (score == 10) {
+        ehp = 7;
+      }
+
+      xm1 = 0;
+      xm2 = 0;
+      xm3 = 0;
+
+
+
+
+
+
+
+
+
+    // degats a l'enemy
+    if (xBul < xen+50) {
+        if (xBul > xen-50) {
+          if (yBul > yen-30) {
+            if (yBul < yen+30) {
+              enemy.src = "shotenemy.png"
+              boom.play()
+              yBul = -500;
+              epv -= 1;
+              score += 1;
+              evel += 0.4;
+            }
+          }
+        }
+      }
+
+      if (alert1 == 1) {
+        alert1 = 2;
+        alert.play()
+      }
+      // deplacement icon player
+      if (yPico > 492) {
+        yPico -= 1;
+      }
+      ym1 = -500;
+      ym2 = -500;
+      ym3 = -500;
+
+      if (yen <= 50) {
+        yen += 1;
+      } 
+      
+    erdm = Math.floor(Math.random() * (100 - 0 +1)) + 0;
+    eyBul += 5;
+    if (eshot == 0) {
+        elaser.play()
+        exBul = xen;
+        eyBul = yen;
+        eshot = 1;
+    }
+    if (erdm == 0) {
+      enemydir = 1;
+    } else if (erdm == 1) {
+      enemydir = 2;
+
+
+      if (eyBul > height) {
+        eshot = 0;
+      } 
+    }
+
+    } else if (score < 30){
+      if (score == 30) {
+        xm1 = 500;
+        xm2 = 600;
+        xm3 = 700;
+      }
+
+
+      if (yPico > 550) {
+        yPico -= 1;
+      }
+      enemy.src = "deadenemy.png"
+      eyBul = -500;
+      if (yen < height + 100) {
+       yen += 1;
+       erot += 1;
+       document.querySelector("#enemy").style.transform = `rotate(${erot}deg)`;
+      }
+      if (ym1 < height-80) {
+        ym1 -= mvel;
+      } else {
+        mvel += (Math.random() * 5) + 2;
+      }
+      if (ym2 < height-80) {
+        ym2 -= mvel2;
+      } else {
+        mvel2 += (Math.random() * 5) + 2;
+      }
+      if (ym3 < height-80) {
+        ym3 -= mvel3;
+      } else {
+        mvel3 += (Math.random() * 5) + 2;
+      }
+
+
+      if (mvel > 0) {
+        mvel = (Math.random() * (-height*0.003)) + 1;
+      }
+      if (mvel2 > 0) {
+        mvel2 = (Math.random() * (-height*0.003)) + 1;
+      }
+      if (mvel3 > 0) {
+        mvel3 = (Math.random() * (-height*0.003)) + 1;
+      }
+
+
+
+
+      // shot meteorites
+      if (xBul < xm1+50) {
+        if (xBul > xm1-50) {
+          if (yBul > ym1-30) {
+            if (yBul < ym1+30) {
+              boom.play()
+              ym1 = -500;
+              xm1 = (Math.random() * 500) + 300;
+              score += 1;
+              yBul = -500;
+              rdmRo1 = (Math.random() * 1) + -1;
+            }
+          }
+        }
+      }
+
+      if (xBul < xm2+50) {
+        if (xBul > xm2-50) {
+          if (yBul > ym2-30) {
+            if (yBul < ym2+30) {
+              boom.play()
+              ym2 = -500;
+              xm2 = (Math.random() * 500) + 300;
+              score += 1;
+              yBul = -500;
+              rdmRo2 = (Math.random() * 1) + -1;
+            }
+          }
+        }
+      }
+
+      if (xBul < xm3+50) {
+        if (xBul > xm3-50) {
+          if (yBul > ym3-30) {
+            if (yBul < ym3+30) {
+              boom.play()
+              ym3 = -500;
+              xm3 = (Math.random() * 500) + 300;
+              score += 1;
+              yBul = -500;
+              rdmRo3 = (Math.random() * 1) + -1;
+            }
+          }
+        }
+      }
+
+      // tp meteorites
+      if (ym1 > height-80) {
+        ym1 = -500;
+        xm1 = (Math.random() * 500) + 300;
+      }
+      if (ym2 > height-80) {
+        ym2 = -500;
+        xm2 = (Math.random() * 500) + 300;
+      }
+      if (ym3 > height-80) {
+        ym3 = -500;
+        xm3 = (Math.random() * 500) + 300;
+      }
+
+      
+
+
+
+
+
+
+
+
+
+    }
+
+
+
+
+
+    setTimeout(position, 1);
+    yPos = height-80;
+}
+
+
+
+function move(event) {
+    var keyPressed = String.fromCharCode(event.keyCode);
+    if (keyPressed == "Z") {
+
+      if (yBul <= 0) {
+        laser.play()
+        xBul = xPos;
+        yBul = yPos;
+        shot = 1;
+
+      } 
+      
+      
+
+
+
+    } else if (keyPressed == "D") {
+      dir = 1;
+
+    } else if (keyPressed == "Q") {
+      dir = 2;
+    }
+
+        
+}
+function stop() {
+  dir = 0;
+  acceleration = 0;
+}
+
+document.addEventListener("keydown", move) 
+position();
+</script>  
+<div class="square"></div>
+<div>
+    <img alt="bg" id="bg" width="550px" style="position: absolute; left: 0px; top: 0px;" />
+    <img src="bullet.png" alt="bullet" id="bullet" width="70px" style="position: absolute; left: 0px; top: 0px;" />
+    <img src="ebullet.png" alt="ebullet" id="ebullet" width="60px" style="position: absolute; left: 0px; top: 0px;" />
+    <img alt="enemy" id="enemy" width="100px" style="position: absolute; left: 0px; top: 0px;" />
+    <img alt="eFlam" id="eFlam" width="42px" style="position: absolute; left: 0px; top: 0px;" />
+    <img src="player.png" alt="player" id="sprite" width="70px" style="position: absolute; left: 0px; top: 0px;" />
+
+    <img src="meteor4.png" alt="meteor1" id="meteor1" width="50px" style="position: absolute; left: 0px; top: 0px;" />
+    <img src="meteor4.png" alt="meteor2" id="meteor2" width="50px" style="position: absolute; left: 0px; top: 0px;" />
+    <img src="meteor4.png" alt="meteor3" id="meteor3" width="50px" style="position: absolute; left: 0px; top: 0px;" />
+
+    <img alt="life" id="life" width="200px" style="position: absolute; left: 0px; top: 0px;" />
+    <img alt="ehp" id="ehp" width="200px" style="position: absolute; left: 0px; top: 0px;" />
+    <img alt="map" id="map" width="70px" style="position: absolute; left: 0px; top: 0px;" />
+    <img alt="Pico" id="Pico" width="55px" style="position: absolute; left: 0px; top: 0px;" />
+    <img alt="coin" id="coin" width="35px" style="position: absolute; left: 0px; top: 0px;" />
+
+
+
+</div>
+
+<h1 id="score" style="position: absolute; left: 85px; top: 20px;" class="score"></h1>
+<h1 class="score2" style="position: absolute; left: 50px; top: 20px;">x</h1>
+<button class="button-4" role="button"onclick="window.location.href='index.html'">menu</button>
+
+
+</body>
+</html>
